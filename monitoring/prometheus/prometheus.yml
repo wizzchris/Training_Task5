@@ -6,8 +6,15 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
   - job_name: 'nginx'
+    tls_config:
+      ca_file: /opt/prometheus/secrets/myCA.pem
+      cert_file: /opt/prometheus/secrets/prom_server.crt
+      key_file: /opt/prometheus/secrets/prom_server_nopass.key
+      server_name: app-exporter
+      insecure_skip_verify: true
+    scheme: https
     static_configs:
-      - targets: ['192.168.0.92:9113']
+      - targets: ['app-exporter:9113']
 rule_files:
  - rules.yml
 

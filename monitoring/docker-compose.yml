@@ -6,6 +6,7 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
+      - ./secrets/:/opt/prometheus/secrets/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:

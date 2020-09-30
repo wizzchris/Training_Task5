@@ -18,8 +18,14 @@ services:
     image: nginx/nginx-prometheus-exporter
     container_name: app-exporter
     user: root
+    volumes:
+     - ./nodeexporter:/etc/nodeexporter
     environment:
       - SCRAPE_URI=http://app:8080/stub_status
+      - SSL_CA_CERT=/etc/nodeexporter/myCA.pem
+      - SSL_CLIENT_CERT=/etc/nodeexporter/Client.crt
+      - SSL_CLIENT_KEY=/etc/nodeexporter/Client_nopass.key
+      - SSL_VERIFY=true
     restart: always
     ports:
       - 9113:9113

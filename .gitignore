@@ -1,0 +1,6 @@
+/monitoring/secrets/*
+*.key
+*.crt
+*.csr
+*.pem
+/app/nodeexporter/*
