@@ -7,4 +7,12 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'nginx'
     static_configs:
-      - targets: [':9113']
+      - targets: ['192.168.0.92:9113']
+rule_files:
+ - rules.yml
+
+alerting:
+ alertmanagers:
+   - static_configs:
+     - targets:
+       - alertmanager:9093
