@@ -15,6 +15,13 @@ scrape_configs:
     scheme: https
     static_configs:
       - targets: ['app-exporter:9113']
+  - job_name: 'node'
+    scheme: https
+    tls_config:
+      ca_file: /opt/prometheus/secrets/myCA.pem
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['node-exporter:9100']
 rule_files:
  - rules.yml
 
