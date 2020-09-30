@@ -1,24 +1,19 @@
 global:
- resolve_timeout: 1m
+receivers:
+- name: gmail-notifications
+  email_configs:
+  - to: email@email.com
+    from: email@email.com
+    smarthost: host
+    auth_username: email@email.com
+    auth_identity: email@email.com
+    auth_password: password
+    send_resolved: true
+- name: default
 
 route:
-- match:
-    alertname: QuietHours
-  receiver: 'gmail-notifications'
-
-inhibit_rules:
-- source_match:
-    alertname: QuietHours
-  target_match:
-    severity: all
-
-receivers:
-- name: 'gmail-notifications'
- email_configs:
- - to: christopher97rogers@gmail.com
-   from: christopher97rogers@gmail.com
-   smarthost: smtp.gmail.com:587
-   auth_username: christopher97rogers@gmail.com
-   auth_identity: christopher97rogers@gmail.com
-   auth_password: password
-   send_resolved: true
+  receiver: 'default'
+  routes:
+  - receiver: 'gmail-notifications'
+    match:
+      alertname: QuietHours
