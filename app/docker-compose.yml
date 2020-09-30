@@ -1,0 +1,33 @@
+---
+version: "3.8"
+services:
+  app:
+    image: nginx
+    container_name: app
+    volumes:
+     - ./templates:/etc/nginx/templates
+     - ./data1:/data1
+    ports:
+      - 80:80
+      - 8080:8080
+    networks:
+      - backend
+
+
+  app-exporter:
+    image: nginx/nginx-prometheus-exporter
+    container_name: app-exporter
+    user: root
+    environment:
+      - SCRAPE_URI=http://app:8080/stub_status
+    restart: always
+    ports:
+      - 9113:9113
+    networks:
+      - backend
+    depends_on:
+      - app
+
+networks:
+  backend:
+    driver: bridge
